@@ -1,0 +1,401 @@
+:root {
+    --primary: #1a73e8;
+    --primary-dark: #1557b0;
+    --accent: #ffb900;
+    --surface: #ffffff;
+    --on-surface: #1f1f1f;
+    --glass-bg: rgba(255, 255, 255, 0.9);
+    --glass-border: rgba(255, 255, 255, 0.3);
+    --shadow-premium: 0 20px 40px rgba(0, 0, 0, 0.1);
+    --radius-xl: 32px;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    font-family: 'Outfit', sans-serif;
+    background: #f8fafd;
+    color: var(--on-surface);
+    height: 100vh;
+    overflow: hidden;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* 1. Landing Page Styles */
+#landing-page {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+}
+
+.landing-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    filter: brightness(0.6);
+}
+
+.landing-content {
+    position: relative;
+    text-align: center;
+    color: white;
+    max-width: 600px;
+    padding: 40px;
+    animation: fadeInUp 1.2s cubic-bezier(0.2, 0, 0.2, 1) forwards;
+}
+
+.landing-title {
+    font-size: 84px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    letter-spacing: -2px;
+    text-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+}
+
+.landing-subtitle {
+    font-size: 24px;
+    font-weight: 300;
+    margin-bottom: 48px;
+    opacity: 0.9;
+}
+
+.primary-button {
+    background: white;
+    color: var(--primary);
+    border: none;
+    padding: 18px 48px;
+    border-radius: 40px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+}
+
+.primary-button:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* 2. Catalog Menu Styles (IMPOSING TITLE) */
+#catalog-page {
+    padding: 60px 20px;
+    height: 100vh;
+    overflow-y: auto;
+    background: linear-gradient(135deg, #f8fafd 0%, #e0eafc 100%);
+}
+
+.catalog-header {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.imposing-title {
+    font-size: 96px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -4px;
+    margin-bottom: 10px;
+    background: linear-gradient(135deg, var(--primary), #a2c2e8);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 4px 8px rgba(26, 115, 232, 0.2));
+    animation: glow 3s infinite alternate;
+}
+
+@keyframes glow {
+    from {
+        filter: drop-shadow(0 0 5px rgba(26, 115, 232, 0.2));
+    }
+
+    to {
+        filter: drop-shadow(0 0 20px rgba(26, 115, 232, 0.4));
+    }
+}
+
+.catalog-subtitle {
+    font-size: 20px;
+    color: #5f6368;
+    font-weight: 300;
+    letter-spacing: 2px;
+}
+
+.catalog-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 32px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.catalog-card {
+    position: relative;
+    height: 380px;
+    border-radius: 28px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.5s cubic-bezier(0.2, 0, 0.2, 1);
+}
+
+.catalog-card:hover {
+    transform: translateY(-12px);
+    box-shadow: 0 40px 80px rgba(0, 0, 0, 0.15);
+}
+
+.card-image {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    transition: transform 1.2s ease;
+}
+
+.catalog-card:hover .card-image {
+    transform: scale(1.1);
+}
+
+.card-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 40px;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent 80%);
+    color: white;
+}
+
+.card-overlay h3 {
+    font-size: 32px;
+    margin-bottom: 6px;
+}
+
+.card-overlay p {
+    opacity: 0.9;
+    font-size: 16px;
+    font-weight: 300;
+}
+
+/* 3. Content View with BANNER */
+#app-page {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.category-banner {
+    height: 220px;
+    width: 100%;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+.category-banner::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    background: linear-gradient(to top, #f8fafd, transparent);
+}
+
+.app-bar {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 72px;
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 100;
+}
+
+.logo-text-small {
+    font-weight: 700;
+    color: white;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.main-view {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 20px 40px;
+    overflow-y: auto;
+    background: #f8fafd;
+}
+
+.date-header {
+    margin: -30px 0 30px;
+    font-size: 18px;
+    font-weight: 500;
+    color: #5f6368;
+    z-index: 10;
+}
+
+.affirmation-card {
+    background: white;
+    width: 100%;
+    max-width: 650px;
+    border-radius: var(--radius-xl);
+    padding: 48px;
+    box-shadow: var(--shadow-premium);
+    margin-top: 20px;
+    /* Changed from -60px to 20px to avoid overlap */
+    margin-bottom: 40px;
+    z-index: 10;
+    text-align: center;
+}
+
+.affirmation-text {
+    font-size: 34px;
+    line-height: 1.35;
+    color: #3c4043;
+    font-style: italic;
+    margin: 32px 0;
+}
+
+.frequency-list {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    /* Increased gap for video players */
+    width: 100%;
+    margin-top: 24px;
+}
+
+.video-container {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%;
+    /* 16:9 Aspect Ratio */
+    height: 0;
+    overflow: hidden;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+.frequency-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--primary);
+    margin-bottom: 12px;
+    display: block;
+}
+
+.frequency-item {
+    background: #f1f3f4;
+    padding: 20px 32px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-decoration: none;
+    color: var(--on-surface);
+    transition: 0.3s;
+    font-weight: 500;
+}
+
+.frequency-item:hover {
+    background: var(--primary);
+    color: white;
+    transform: scale(1.02);
+}
+
+.icon-button {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.icon-button:hover {
+    background: rgba(255, 255, 255, 0.4);
+}
+
+.icon-button svg {
+    fill: white;
+    width: 24px;
+}
+
+.create-btn {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 14px 40px;
+    border-radius: 28px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.create-btn:hover {
+    background: var(--primary-dark);
+    transform: scale(1.05);
+}
+
+/* Mobile UI */
+@media (max-width: 600px) {
+    .imposing-title {
+        font-size: 48px;
+        letter-spacing: -2px;
+    }
+
+    .landing-title {
+        font-size: 48px;
+    }
+
+    .category-banner {
+        height: 160px;
+    }
+
+    .affirmation-card {
+        padding: 32px 24px;
+        margin-top: -40px;
+    }
+
+    .affirmation-text {
+        font-size: 26px;
+    }
+
+    .catalog-grid {
+        grid-template-columns: 1fr;
+    }
+}
