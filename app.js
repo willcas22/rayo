@@ -112,7 +112,7 @@ class AngelApp {
         this.animateCard();
         this.badge.textContent = this.categoryLabels[this.currentCategory];
 
-        // Reset card content area (clear frequencies if they were there)
+        // Reset card content area
         this.cardContentArea.innerHTML = '<p class="affirmation-text" id="affirmation-text"></p>';
         this.affirmationText = document.getElementById('affirmation-text');
 
@@ -135,6 +135,30 @@ class AngelApp {
             this.btnInspire.style.display = 'block';
             this.displayContent(0);
         }
+
+        this.addHomeButton();
+    }
+
+    addHomeButton() {
+        // Remove existing actions if any
+        let actions = this.card.querySelector('.card-actions');
+        if (actions) actions.remove();
+
+        actions = document.createElement('div');
+        actions.className = 'card-actions';
+
+        const homeBtn = document.createElement('div');
+        homeBtn.className = 'secondary-btn';
+        homeBtn.innerHTML = `
+            <svg viewBox="0 0 24 24" width="20" height="20"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" fill="currentColor"/></svg>
+            <span>Inicio</span>
+        `;
+        homeBtn.addEventListener('click', () => {
+            this.switchView('catalog');
+        });
+
+        actions.appendChild(homeBtn);
+        this.card.appendChild(actions);
     }
 
     renderFrequencies() {
@@ -143,29 +167,52 @@ class AngelApp {
         document.querySelector('.nav-controls').style.display = 'none';
         this.btnInspire.style.display = 'none';
 
-        const list = document.createElement('div');
-        list.className = 'frequency-list';
+        const menu = document.createElement('div');
+        menu.className = 'frequency-list';
 
-        data.frequencies.forEach(f => {
-            const container = document.createElement('div');
-            container.className = 'frequency-item-full';
-            container.innerHTML = `
-                <span class="frequency-title">${f.name}</span>
-                <div class="video-container">
-                    <iframe 
-                        src="${f.url}" 
-                        title="${f.name}"
-                        frameborder="0" 
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                        allowfullscreen>
-                    </iframe>
-                </div>
+        data.frequencies.forEach((f, index) => {
+            const btn = document.createElement('div');
+            btn.className = 'frequency-menu-btn';
+            btn.innerHTML = `
+                <span>${f.name}</span>
+                <svg class="icon" viewBox="0 0 24 24" width="20"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z" fill="currentColor"/></svg>
             `;
-            list.appendChild(container);
+            btn.addEventListener('click', () => this.showFrequencyDetail(f));
+            menu.appendChild(btn);
         });
 
         this.cardContentArea.innerHTML = '';
-        this.cardContentArea.appendChild(list);
+        this.cardContentArea.appendChild(menu);
+    }
+
+    showFrequencyDetail(f) {
+        this.animateCard();
+        this.cardContentArea.innerHTML = `
+            <span class="frequency-title">${f.name}</span>
+            <div class="video-container">
+                <iframe 
+                    src="${f.url}" 
+                    title="${f.name}"
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                    allowfullscreen>
+                </iframe>
+            </div>
+            <div class="card-actions" style="border-top: none; margin-top: 24px;">
+                <div class="secondary-btn" id="btn-back-freq">
+                    <svg viewBox="0 0 24 24" width="20"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" fill="currentColor"/></svg>
+                    <span>Volver</span>
+                </div>
+            </div>
+        `;
+
+        document.getElementById('btn-back-freq').addEventListener('click', () => {
+            this.updateUI();
+        });
+
+        // Hide main actions when in detail
+        const mainActions = this.card.querySelector('.card-actions:not([style*="border-top: none"])');
+        if (mainActions) mainActions.style.display = 'none';
     }
 
     getAffirmationIndex(date) {
